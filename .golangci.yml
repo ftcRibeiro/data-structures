@@ -1,0 +1,38 @@
+linters-settings:
+  golint:
+    min-confidence: 0
+  lll:
+    line-length: 170
+  gofmt:
+    simplify: true
+
+linters:
+  disable-all: true
+  enable:
+    - gofmt
+    - errcheck
+    - gosimple
+    - golint
+    - govet
+    - lll
+    - unused
+    - scopelint
+    - unconvert
+    - unparam
+    - goimports
+
+issues:
+  exclude-rules:
+    - linters:
+        - lll
+      source: "(^//|json:.*example:|\")"
+    - path: _test\.go
+      linters:
+        - scopelint
+    - path: _gen(.*)\.go
+      linters:
+        - errcheck
+        - lll
+run:
+  deadline: 5m
+  tests: true
