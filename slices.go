@@ -1,6 +1,9 @@
 package datastructure
 
-import "sort"
+import (
+	"errors"
+	"sort"
+)
 
 func RemoveByItem[T comparable](s Slice[T], item T) Slice[T] {
 	for i, v := range s {
@@ -11,9 +14,11 @@ func RemoveByItem[T comparable](s Slice[T], item T) Slice[T] {
 	return s
 }
 
-func RemoveByIndex[T comparable](s Slice[T], i int) Slice[T] {
-	s[i] = s[len(s)-1]
-	return s[:len(s)-1]
+func RemoveByIndex[T comparable](s Slice[T], i int) (Slice[T], error) {
+	if i >= len(s) {
+		return nil, errors.New("index out of range")
+	}
+	return append(s[:i], s[i+1:]...), nil
 }
 
 func SumItems[T Number](s Slice[T]) T {
